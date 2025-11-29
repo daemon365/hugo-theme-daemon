@@ -18,7 +18,7 @@
                 </div>
                 <div class="category-info">
                     <h3 class="category-name">{{ $name | title }}</h3>
-                    <p class="category-count">{{ len $taxonomy.Pages }} {{ i18n "postsCount" (dict "Count" (len $taxonomy.Pages)) }}</p>
+                    <p class="category-count">{{ i18n "postsCount" (dict "Count" (len $taxonomy.Pages)) }}</p>
                 </div>
             </a>
             {{ end }}
