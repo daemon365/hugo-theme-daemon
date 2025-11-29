@@ -4,7 +4,8 @@
         <!-- Recent Posts -->
         <section class="recent-posts">
             <div class="posts-list">
-                {{ range first 10 (where .Site.RegularPages "Type" "post") }}
+                {{ $paginator := .Paginate (where .Site.RegularPages "Type" "post") }}
+                {{ range $paginator.Pages }}
                 <article class="post-card">
                     <div class="post-card-content">
                         <h3 class="post-title">
@@ -57,6 +58,72 @@
                 </article>
                 {{ end }}
             </div>
+            
+            <!-- Pagination -->
+            {{ if gt $paginator.TotalPages 1 }}
+            <nav class="pagination">
+                {{ if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="pagination-nav pagination-prev">
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                {{ end }}
+                
+                <div class="pagination-numbers">
+                    {{ $currentPage := $paginator.PageNumber }}
+                    {{ $totalPages := $paginator.TotalPages }}
+                    
+                    {{/* Always show first page */}}
+                    {{ if eq $currentPage 1 }}
+                    <span class="pagination-number active">1</span>
+                    {{ else }}
+                    <a href="{{ $paginator.First.URL }}" class="pagination-number">1</a>
+                    {{ end }}
+                    
+                    {{/* Show ellipsis if needed */}}
+                    {{ if gt $currentPage 3 }}
+                    <span class="pagination-ellipsis">...</span>
+                    {{ end }}
+                    
+                    {{/* Show pages around current page */}}
+                    {{ range $paginator.Pagers }}
+                        {{ $pageNum := .PageNumber }}
+                        {{ if and (gt $pageNum 1) (lt $pageNum $totalPages) }}
+                            {{ if and (ge $pageNum (sub $currentPage 1)) (le $pageNum (add $currentPage 1)) }}
+                                {{ if eq $pageNum $currentPage }}
+                                <span class="pagination-number active">{{ $pageNum }}</span>
+                                {{ else }}
+                                <a href="{{ .URL }}" class="pagination-number">{{ $pageNum }}</a>
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                    
+                    {{/* Show ellipsis if needed */}}
+                    {{ if lt $currentPage (sub $totalPages 2) }}
+                    <span class="pagination-ellipsis">...</span>
+                    {{ end }}
+                    
+                    {{/* Always show last page */}}
+                    {{ if gt $totalPages 1 }}
+                        {{ if eq $currentPage $totalPages }}
+                        <span class="pagination-number active">{{ $totalPages }}</span>
+                        {{ else }}
+                        <a href="{{ $paginator.Last.URL }}" class="pagination-number">{{ $totalPages }}</a>
+                        {{ end }}
+                    {{ end }}
+                </div>
+                
+                {{ if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="pagination-nav pagination-next">
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+                {{ end }}
+            </nav>
+            {{ end }}
         </section>
     </div>
 </div>
