@@ -1,0 +1,12 @@
+<!-- CC BY-NC-SA License Icon -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40">
+  <defs>
+    <style>
+      .cc-icon { fill: #6e6e73; }
+    </style>
+  </defs>
+  <g class="cc-icon">
+    <circle cx="20" cy="20" r="15"/>
+    <path d="M20,10 C14.5,10 10,14.5 10,20 C10,25.5 14.5,30 20,30 C25.5,30 30,25.5 30,20 C30,14.5 25.5,10 20,10 Z M20,27 C16,27 13,24 13,20 C13,16 16,13 20,13 C24,13 27,16 27,20 C27,24 24,27 20,27 Z"/>
+  </g>
+</svg>
