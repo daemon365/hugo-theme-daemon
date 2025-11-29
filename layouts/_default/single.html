@@ -1,0 +1,152 @@
+{{ define "main" }}
+<div class="post-container">
+    <div class="container">
+        <article class="post-content">
+            <header class="post-header">
+                <h1 class="post-title">{{ .Title }}</h1>
+                
+                <div class="post-meta">
+                    <time datetime="{{ .Date.Format "2006-01-02" }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        {{ .Date.Format "2006-01-02" }}
+                    </time>
+                    
+                    {{ with .Params.categories }}
+                    <a href="{{ "categories" | relURL }}/{{ index . 0 | urlize }}" class="category-link">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        {{ index . 0 }}
+                    </a>
+                    {{ end }}
+                    
+                    {{ if .ReadingTime }}
+                    <span class="reading-time">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {{ .ReadingTime }} min read
+                    </span>
+                    {{ end }}
+                    
+                    {{ if .WordCount }}
+                    <span class="word-count">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        {{ .WordCount }} words
+                    </span>
+                    {{ end }}
+                </div>
+                
+                {{ with .Params.tags }}
+                <div class="post-tags">
+                    {{ range . }}
+                    <a href="{{ "tags" | relURL }}/{{ . | urlize }}" class="tag">
+                        <svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                        </svg>
+                        {{ . }}
+                    </a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </header>
+            
+            <div class="post-body">
+                {{ .Content }}
+            </div>
+            
+            <footer class="post-footer">
+                <div class="post-license">
+                    <p><strong>Article Title:</strong> {{ .Title }}</p>
+                    <p><strong>Author:</strong> {{ .Site.Params.author }}</p>
+                    <p><strong>Permalink:</strong> <a href="{{ .Permalink }}">{{ .Permalink }}</a></p>
+                    <p><strong>License:</strong> This article is licensed under 
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">BY-NC-SA</a>. Please cite the source when reposting.
+                    </p>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="post-navigation">
+                    {{ with .PrevInSection }}
+                    <a href="{{ .RelPermalink }}" class="nav-prev">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <div>
+                            <span class="nav-label">Previous</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </div>
+                    </a>
+                    {{ end }}
+                    
+                    {{ with .NextInSection }}
+                    <a href="{{ .RelPermalink }}" class="nav-next">
+                        <div>
+                            <span class="nav-label">Next</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </div>
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    {{ end }}
+                </nav>
+                
+                <!-- Comments Section -->
+                {{ if .Site.Params.comments.enable }}
+                <div class="post-comments">
+                    {{ if eq .Site.Params.comments.active "utterances" }}
+                    {{ with .Site.Params.utterances }}
+                    <script src="https://utteranc.es/client.js"
+                            repo="{{ .repo }}"
+                            issue-term="{{ .issueTerm | default "pathname" }}"
+                            label="{{ .label | default "comments" }}"
+                            theme="{{ .theme | default "preferred-color-scheme" }}"
+                            crossorigin="anonymous"
+                            async>
+                    </script>
+                    {{ end }}
+                    {{ end }}
+                </div>
+                {{ end }}
+            </footer>
+        </article>
+    </div>
+</div>
+
+<!-- Floating TOC Button -->
+<div class="toc-float-button" id="tocButton">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </svg>
+</div>
+
+<!-- TOC Panel -->
+<div class="toc-panel" id="tocPanel">
+    <div class="toc-panel-header">
+        <h3 class="toc-panel-title">Table of Contents</h3>
+        <button class="toc-panel-close" id="tocClose">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+    <nav class="toc-panel-nav" id="TableOfContents">
+        {{ .TableOfContents }}
+    </nav>
+</div>
+{{ end }}

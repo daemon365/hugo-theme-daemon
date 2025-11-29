@@ -1,0 +1,194 @@
+# Navigation
+[home]
+other = "Home"
+
+[archives]
+other = "Archives"
+
+[tags]
+other = "Tags"
+
+[categories]
+other = "Categories"
+
+[about]
+other = "About"
+
+# Post
+[readMore]
+other = "Read More"
+
+[wordCount]
+other = "words"
+
+[readingTime]
+other = "min read"
+
+[publishedOn]
+other = "Published on"
+
+[lastModified]
+other = "Last modified"
+
+[author]
+other = "Author"
+
+[tableOfContents]
+other = "Table of Contents"
+
+[relatedPosts]
+other = "Related Posts"
+
+[previousPost]
+other = "Previous"
+
+[nextPost]
+other = "Next"
+
+# Taxonomies
+[allTags]
+other = "All Tags"
+
+[allCategories]
+other = "All Categories"
+
+[taggedWith]
+other = "Tagged with"
+
+[inCategory]
+other = "In category"
+
+[postsCount]
+one = "{{ .Count }} post"
+other = "{{ .Count }} posts"
+
+# Search
+[search]
+other = "Search"
+
+[searchPlaceholder]
+other = "Search articles..."
+
+[searchHint]
+other = "Enter 2 or more characters to start searching"
+
+[searchNoResults]
+other = "No results found"
+
+[searchResults]
+one = "{{ .Count }} result"
+other = "{{ .Count }} results"
+
+# Comments
+[comments]
+other = "Comments"
+
+[noComments]
+other = "No comments yet"
+
+# Footer
+[poweredBy]
+other = "Powered by"
+
+[and]
+other = "&"
+
+[hugo]
+other = "Hugo"
+
+[theme]
+other = "Daemon"
+
+[drivenBy]
+other = ""
+
+[copyright]
+other = "© {{ .Year }} {{ .Site.Title }}. All rights reserved."
+
+# Statistics
+[siteViews]
+other = "Site Views"
+
+[siteVisitors]
+other = "Visitors"
+
+[pageViews]
+other = "Views"
+
+# Actions
+[backToTop]
+other = "Back to Top"
+
+[copyCode]
+other = "Copy"
+
+[copied]
+other = "Copied!"
+
+[close]
+other = "Close"
+
+# License
+[license]
+other = "This work is licensed under"
+
+[licenseCC]
+other = "Creative Commons Attribution 4.0 International License"
+
+# Dates
+[january]
+other = "January"
+
+[february]
+other = "February"
+
+[march]
+other = "March"
+
+[april]
+other = "April"
+
+[may]
+other = "May"
+
+[june]
+other = "June"
+
+[july]
+other = "July"
+
+[august]
+other = "August"
+
+[september]
+other = "September"
+
+[october]
+other = "October"
+
+[november]
+other = "November"
+
+[december]
+other = "December"
+
+[monday]
+other = "Monday"
+
+[tuesday]
+other = "Tuesday"
+
+[wednesday]
+other = "Wednesday"
+
+[thursday]
+other = "Thursday"
+
+[friday]
+other = "Friday"
+
+[saturday]
+other = "Saturday"
+
+[sunday]
+other = "Sunday"

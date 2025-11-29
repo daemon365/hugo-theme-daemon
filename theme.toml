@@ -1,0 +1,12 @@
+name = "Daemon"
+license = "MIT"
+licenselink = "https://github.com/daemon365/hugo-theme-daemon/blob/main/LICENSE"
+description = "A minimalist Hugo theme with Apple design style - clean, elegant, and beautiful"
+homepage = "https://github.com/daemon365/hugo-theme-daemon"
+tags = ["blog", "minimalist", "clean", "apple", "modern", "responsive"]
+features = ["responsive", "search", "toc", "syntax-highlighting", "dark-mode-optional"]
+min_version = "0.112.0"
+
+[author]
+  name = "daemon365"
+  homepage = "https://github.com/daemon365"

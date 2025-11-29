@@ -1,0 +1,11 @@
+{
+  "name": "{{ .Site.Title }}",
+  "short_name": "{{ .Site.Title }}",
+  "description": "{{ .Site.Params.description }}",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007aff",
+  "orientation": "portrait-primary"
+}

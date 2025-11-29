@@ -1,0 +1,116 @@
+baseURL: "http://localhost:1313/"
+languageCode: "zh-cn"
+defaultContentLanguage: "en"
+title: "Daemon"
+theme: "hugo-theme-daemon"
+
+# Enable emoji support
+enableEmoji: true
+
+# Pagination
+paginate: 10
+
+# Syntax highlighting
+markup:
+  highlight:
+    style: "monokailight"
+    lineNos: false
+    lineNumbersInTable: false
+    tabWidth: 4
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+    ordered: false
+
+# Output formats
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+# Permalinks - Use file path structure
+permalinks: {}
+
+# Taxonomies
+taxonomies:
+  tag: "tags"
+  category: "categories"
+
+# Site parameters
+params:
+  author: "daemon365"
+  subtitle: "Don't let yourself stop."
+  bio: "A passionate developer who loves coding and sharing knowledge."
+  description: "A minimal Hugo theme with Apple design aesthetics"
+  keywords:
+    - blog
+    - hugo
+    - minimal
+    - apple
+
+  # Avatar - put your avatar in static/imgs/
+  avatar: "/imgs/daemon365.png"
+
+  # Logo - optional
+  # logo: "/imgs/logo.png"
+
+  # Favicon - put your favicon.ico in static/
+  favicon: "/imgs/favicon.ico"
+
+  # PWA Icons - recommended sizes: 192x192 and 512x512
+  # Uncomment these lines after adding icon files to static/imgs/
+  # icon192: "/imgs/icon-192.png"
+  # icon512: "/imgs/icon-512.png"
+
+  # Default image for SEO
+  defaultImage: "/imgs/avatar.svg"
+
+  # Enable global math rendering
+  math: false
+
+  # RSS Settings
+  rss:
+    fullContent: true  # Include full content in RSS feed
+
+  # Social links
+  social:
+    github: "https://github.com/daemon365"
+    email: "daemon365@foxmail.com"
+
+  # Comments System (utterances)
+  comments:
+    enable: true
+    active: "utterances"
+
+  utterances:
+    repo: "daemon365/blog"
+    issueTerm: "pathname"
+    label: "comments"
+    theme: "preferred-color-scheme"
+
+# Menu
+menu:
+  main:
+    - identifier: "home"
+      name: "Home"
+      url: "/"
+      weight: 1
+
+    - identifier: "about"
+      name: "About"
+      url: "/about/"
+      weight: 2
+
+    - identifier: "archives"
+      name: "Archives"
+      url: "/archives/"
+      weight: 3
+
+    - identifier: "tags"
+      name: "Tags"
+      url: "/tags/"
+      weight: 4

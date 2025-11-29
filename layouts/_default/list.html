@@ -1,0 +1,95 @@
+{{ define "main" }}
+<div class="list-container">
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">{{ .Title }}</h1>
+            {{ with .Description }}
+            <p class="page-description">{{ . }}</p>
+            {{ end }}
+            <p class="list-count"><strong>{{ len .Pages }}</strong> posts</p>
+        </header>
+        
+        <div class="posts-list">
+            {{ range .Pages }}
+            <article class="post-card">
+                <div class="post-card-content">
+                    <h3 class="post-title">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    </h3>
+                    
+                    <div class="post-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">
+                            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            {{ .Date.Format "2006-01-02" }}
+                        </time>
+                        
+                        {{ with .Params.categories }}
+                        <span class="post-category">
+                            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            {{ index . 0 }}
+                        </span>
+                        {{ end }}
+                        
+                        {{ if .ReadingTime }}
+                        <span class="reading-time">
+                            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            {{ .ReadingTime }} min read
+                        </span>
+                        {{ end }}
+                    </div>
+                    
+                    {{ if .Plain }}
+                    <p class="post-summary">{{ .Plain | truncate 150 }}</p>
+                    {{ end }}
+                    
+                    {{ with .Params.tags }}
+                    <div class="post-tags">
+                        {{ range first 3 . }}
+                        <a href="{{ "tags" | relURL }}/{{ . | urlize }}" class="tag">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        
+        <!-- Pagination -->
+        {{ if gt .Paginator.TotalPages 1 }}
+        <nav class="pagination">
+            {{ if .Paginator.HasPrev }}
+            <a href="{{ .Paginator.Prev.URL }}" class="pagination-prev">
+                <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Previous
+            </a>
+            {{ end }}
+            
+            <span class="pagination-info">
+                Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}
+            </span>
+            
+            {{ if .Paginator.HasNext }}
+            <a href="{{ .Paginator.Next.URL }}" class="pagination-next">
+                Next
+                <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+            {{ end }}
+        </nav>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

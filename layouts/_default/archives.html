@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="archives-container">
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">{{ i18n "archives" }}</h1>
+            <p class="archives-count"><strong>{{ len (where .Site.RegularPages "Type" "post") }}</strong> posts in total</p>
+        </header>
+        
+        <div class="archives-list">
+            {{ range (where .Site.RegularPages "Type" "post").GroupByDate "2006" }}
+            <section class="archive-year">
+                <h2 class="year-title">{{ .Key }}</h2>
+                <div class="archive-posts">
+                    {{ range .Pages }}
+                    <article class="archive-item">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}" class="archive-date">
+                            {{ .Date.Format "01-02" }}
+                        </time>
+                        <div class="archive-content">
+                            <h3 class="archive-title">
+                                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                            </h3>
+                            {{ with .Params.categories }}
+                            <span class="archive-category">
+                                <svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                {{ index . 0 }}
+                            </span>
+                            {{ end }}
+                        </div>
+                    </article>
+                    {{ end }}
+                </div>
+            </section>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Favicon -->
+    {{ with .Site.Params.favicon }}
+    <link rel="icon" href="{{ . | relURL }}">
+    {{ end }}
+    
+    <!-- SEO Meta Tags -->
+    {{ partial "seo.html" . }}
+    
+    <!-- Modular CSS - Load individual component stylesheets -->
+    <!-- Variables and base styles -->
+    <link rel="stylesheet" href="{{ "css/components/variables.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components/base.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components/layout.css" | relURL }}">
+    
+    <!-- Component styles (loaded from main.css for now, can be separated later) -->
+    <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+    
+    <!-- Interactive component styles -->
+    <link rel="stylesheet" href="{{ "css/components/search.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components/toc.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components/image-preview.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components/reading-progress.css" | relURL }}">
+    
+    <!-- Fonts -->
+    <style>
+        :root {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+    
+    {{ partial "math.html" . }}
+    {{ block "head" . }}{{ end }}
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-bar"></div>
+    
+    {{ partial "header.html" . }}
+    
+    <main class="main-content">
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    {{ partial "footer.html" . }}
+    {{ partial "search.html" . }}
+    
+    <!-- Modular JavaScript - Load individual component scripts -->
+    <script src="{{ "js/components/search.js" | relURL }}"></script>
+    <script src="{{ "js/components/toc.js" | relURL }}"></script>
+    <script src="{{ "js/components/scroll-effects.js" | relURL }}"></script>
+    <script src="{{ "js/components/code-copy.js" | relURL }}"></script>
+    <script src="{{ "js/components/lazy-loading.js" | relURL }}"></script>
+    <script src="{{ "js/components/image-preview.js" | relURL }}"></script>
+    <script src="{{ "js/components/back-to-top.js" | relURL }}"></script>
+    <script src="{{ "js/main-new.js" | relURL }}"></script>
+    
+    {{ block "scripts" . }}{{ end }}
+</body>
+</html>

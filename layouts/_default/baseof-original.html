@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Favicon -->
+    {{ with .Site.Params.favicon }}
+    <link rel="icon" href="{{ . | relURL }}">
+    {{ end }}
+    
+    <!-- SEO Meta Tags -->
+    {{ partial "seo.html" . }}
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+    
+    <!-- Fonts -->
+    <style>
+        :root {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+    
+    {{ partial "math.html" . }}
+    {{ block "head" . }}{{ end }}
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-bar"></div>
+    
+    {{ partial "header.html" . }}
+    
+    <main class="main-content">
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    {{ partial "footer.html" . }}
+    {{ partial "search.html" . }}
+    
+    <!-- JavaScript -->
+    <script src="{{ "js/main.js" | relURL }}"></script>
+    {{ block "scripts" . }}{{ end }}
+</body>
+</html>

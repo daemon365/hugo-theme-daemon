@@ -1,0 +1,194 @@
+# 导航
+[home]
+other = "首页"
+
+[archives]
+other = "归档"
+
+[tags]
+other = "标签"
+
+[categories]
+other = "分类"
+
+[about]
+other = "关于"
+
+# 文章
+[readMore]
+other = "阅读更多"
+
+[wordCount]
+other = "字"
+
+[readingTime]
+other = "分钟阅读"
+
+[publishedOn]
+other = "发布于"
+
+[lastModified]
+other = "最后修改"
+
+[author]
+other = "作者"
+
+[tableOfContents]
+other = "目录"
+
+[relatedPosts]
+other = "相关文章"
+
+[previousPost]
+other = "上一篇"
+
+[nextPost]
+other = "下一篇"
+
+# 分类标签
+[allTags]
+other = "所有标签"
+
+[allCategories]
+other = "所有分类"
+
+[taggedWith]
+other = "标签为"
+
+[inCategory]
+other = "分类在"
+
+[postsCount]
+one = "{{ .Count }} 篇文章"
+other = "{{ .Count }} 篇文章"
+
+# 搜索
+[search]
+other = "搜索"
+
+[searchPlaceholder]
+other = "搜索文章..."
+
+[searchHint]
+other = "输入 2 个或更多字符开始搜索"
+
+[searchNoResults]
+other = "没有找到结果"
+
+[searchResults]
+one = "{{ .Count }} 个结果"
+other = "{{ .Count }} 个结果"
+
+# 评论
+[comments]
+other = "评论"
+
+[noComments]
+other = "暂无评论"
+
+# 页脚
+[poweredBy]
+other = "由"
+
+[and]
+other = "和"
+
+[hugo]
+other = "Hugo"
+
+[theme]
+other = "Daemon"
+
+[drivenBy]
+other = "驱动"
+
+[copyright]
+other = "© {{ .Year }} {{ .Site.Title }}. 保留所有权利。"
+
+# 统计
+[siteViews]
+other = "本站总访问量"
+
+[siteVisitors]
+other = "访客数"
+
+[pageViews]
+other = "浏览量"
+
+# 操作
+[backToTop]
+other = "返回顶部"
+
+[copyCode]
+other = "复制"
+
+[copied]
+other = "已复制！"
+
+[close]
+other = "关闭"
+
+# 许可证
+[license]
+other = "本作品采用"
+
+[licenseCC]
+other = "知识共享署名 4.0 国际许可协议"
+
+# 日期
+[january]
+other = "一月"
+
+[february]
+other = "二月"
+
+[march]
+other = "三月"
+
+[april]
+other = "四月"
+
+[may]
+other = "五月"
+
+[june]
+other = "六月"
+
+[july]
+other = "七月"
+
+[august]
+other = "八月"
+
+[september]
+other = "九月"
+
+[october]
+other = "十月"
+
+[november]
+other = "十一月"
+
+[december]
+other = "十二月"
+
+[monday]
+other = "星期一"
+
+[tuesday]
+other = "星期二"
+
+[wednesday]
+other = "星期三"
+
+[thursday]
+other = "星期四"
+
+[friday]
+other = "星期五"
+
+[saturday]
+other = "星期六"
+
+[sunday]
+other = "星期日"

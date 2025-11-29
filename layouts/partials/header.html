@@ -1,0 +1,66 @@
+<header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="site-branding">
+                <a href="{{ .Site.BaseURL | relURL }}" class="site-logo">
+                    {{ if .Site.Params.logo }}
+                    <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}">
+                    {{ else }}
+                    <span class="site-title">{{ .Site.Title }}</span>
+                    {{ end }}
+                </a>
+            </div>
+            
+            <nav class="site-nav">
+                <ul class="nav-menu">
+                    <li><a href="{{ .Site.BaseURL | relURL }}" class="{{ if .IsHome }}active{{ end }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        {{ i18n "home" }}
+                    </a></li>
+                    <li><a href="{{ "about" | relURL }}" class="{{ if eq .RelPermalink "/about/" }}active{{ end }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        {{ i18n "about" }}
+                    </a></li>
+                    <li><a href="{{ "archives" | relURL }}" class="{{ if eq .RelPermalink "/archives/" }}active{{ end }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        {{ i18n "archives" }}
+                    </a></li>
+                    <li><a href="{{ "categories" | relURL }}" class="{{ if or (eq .Section "categories") (eq .Type "categories") }}active{{ end }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        {{ i18n "categories" }}
+                    </a></li>
+                    <li><a href="{{ "tags" | relURL }}" class="{{ if or (eq .Section "tags") (eq .Type "tags") }}active{{ end }}">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                        </svg>
+                        {{ i18n "tags" }}
+                    </a></li>
+                    <li>
+                        <button class="search-trigger" aria-label="Search">
+                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            {{ i18n "search" }}
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
