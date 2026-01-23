@@ -1,10 +1,9 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `daemon-cache-${CACHE_VERSION}`;
 const OFFLINE_URL = '/offline.html';
 
 // 需要缓存的静态资源
 const STATIC_CACHE = [
-    '/',
     '/css/main.css',
     '/js/main.js',
     '/offline.html',
@@ -51,35 +50,33 @@ self.addEventListener('fetch', (event) => {
     }
 
     event.respondWith(
-        caches.match(event.request)
+        // 网络优先策略：先尝试从网络获取，失败后才使用缓存
+        fetch(event.request)
             .then((response) => {
-                // 缓存命中，返回缓存的资源
-                if (response) {
+                // 检查是否是有效响应
+                if (!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
 
-                // 没有缓存，发起网络请求
-                return fetch(event.request)
-                    .then((response) => {
-                        // 检查是否是有效响应
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
+                // 克隆响应
+                const responseToCache = response.clone();
 
-                        // 克隆响应
-                        const responseToCache = response.clone();
+                // 只缓存静态资源（CSS、JS、图片等）
+                const url = new URL(event.request.url);
+                if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|ttf)$/i)) {
+                    caches.open(CACHE_NAME)
+                        .then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+                }
 
-                        // 缓存响应
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
-
-                        return response;
-                    })
-                    .catch(() => {
-                        // 网络请求失败，返回离线页面
-                        return caches.match(OFFLINE_URL);
+                return response;
+            })
+            .catch(() => {
+                // 网络请求失败，尝试从缓存获取
+                return caches.match(event.request)
+                    .then((cachedResponse) => {
+                        return cachedResponse || caches.match(OFFLINE_URL);
                     });
             })
     );
