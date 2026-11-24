@@ -6,11 +6,12 @@
             {{ with .Description }}
             <p class="page-description">{{ . }}</p>
             {{ end }}
-            <p class="list-count"><strong>{{ len .Pages }}</strong> posts</p>
+            <p class="list-count"><strong>{{ len .Pages }}</strong> {{ i18n "posts" }}</p>
         </header>
         
         <div class="posts-list">
-            {{ range .Pages }}
+            {{ $paginator := .Paginate .Pages }}
+            {{ range $paginator.Pages }}
             <article class="post-card">
                 <div class="post-card-content">
                     <h3 class="post-title">
@@ -43,13 +44,13 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
-                            {{ .ReadingTime }} min read
+                            {{ .ReadingTime }} {{ i18n "minRead" }}
                         </span>
                         {{ end }}
                     </div>
                     
-                    {{ if .Plain }}
-                    <p class="post-summary">{{ .Plain | truncate 150 }}</p>
+                    {{ if .Summary }}
+                    <p class="post-summary">{{ .Summary | plainify | truncate 150 }}</p>
                     {{ end }}
                     
                     {{ with .Params.tags }}
@@ -65,24 +66,24 @@
         </div>
         
         <!-- Pagination -->
-        {{ if gt .Paginator.TotalPages 1 }}
+        {{ if gt $paginator.TotalPages 1 }}
         <nav class="pagination">
-            {{ if .Paginator.HasPrev }}
-            <a href="{{ .Paginator.Prev.URL }}" class="pagination-prev">
+            {{ if $paginator.HasPrev }}
+            <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">
                 <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
-                Previous
+                {{ i18n "previous" }}
             </a>
             {{ end }}
             
             <span class="pagination-info">
-                Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}
+                {{ i18n "pageOf" (dict "Current" $paginator.PageNumber "Total" $paginator.TotalPages) }}
             </span>
             
-            {{ if .Paginator.HasNext }}
-            <a href="{{ .Paginator.Next.URL }}" class="pagination-next">
-                Next
+            {{ if $paginator.HasNext }}
+            <a href="{{ $paginator.Next.URL }}" class="pagination-next">
+                {{ i18n "next" }}
                 <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>

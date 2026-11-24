@@ -3,7 +3,7 @@
     <div class="container">
         <header class="page-header">
             <h1 class="page-title">{{ i18n "archives" }}</h1>
-            <p class="archives-count"><strong>{{ len (where .Site.RegularPages "Type" "post") }}</strong> posts in total</p>
+            <p class="archives-count"><strong>{{ len (where .Site.RegularPages "Type" "post") }}</strong> {{ i18n "postsTotal" }}</p>
         </header>
         
         <div class="archives-list">

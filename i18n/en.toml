@@ -192,3 +192,61 @@ other = "Saturday"
 
 [sunday]
 other = "Sunday"
+
+# Misc
+[posts]
+other = "posts"
+
+[postsTotal]
+other = "posts in total"
+
+[minRead]
+other = "min read"
+
+[words]
+other = "words"
+
+[previous]
+other = "Previous"
+
+[next]
+other = "Next"
+
+[pageOf]
+other = "Page {{ .Current }} of {{ .Total }}"
+
+[articleTitle]
+other = "Article Title"
+
+[permalink]
+other = "Permalink"
+
+[licenseNotice]
+other = "This article is licensed under"
+
+[licenseCite]
+other = "Please cite the source when reposting."
+
+[notFoundTitle]
+other = "Page Not Found"
+
+[notFoundText]
+other = "Oops! The page you're looking for seems to have wandered off into the digital wilderness."
+
+[backToHome]
+other = "Back to Home"
+
+[helpfulLinks]
+other = "Here are some helpful links:"
+
+[returnHome]
+other = "Return to the homepage"
+
+[browseArchives]
+other = "Browse all articles"
+
+[exploreCategories]
+other = "Explore by category"
+
+[findByTag]
+other = "Find articles by tag"

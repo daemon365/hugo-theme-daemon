@@ -71,11 +71,11 @@ echo ""
 
 # Check example site
 echo "4. Checking example site..."
-if [ -f "exampleSite/hugo.toml" ]; then
+if [ -f "exampleSite/config.yaml" ]; then
     echo -e "${GREEN}✓${NC} Example site configuration exists"
     
     # Check if theme is properly referenced
-    if grep -q "theme.*hugo-theme-daemon" exampleSite/hugo.toml; then
+    if grep -q "hugo-theme-daemon" exampleSite/config.yaml; then
         echo -e "${GREEN}✓${NC} Theme is properly configured"
     else
         echo -e "${YELLOW}⚠${NC} Theme might not be properly configured in hugo.toml"
@@ -107,7 +107,7 @@ echo "=========================================="
 echo -e "${GREEN}Installation check complete!${NC}"
 echo ""
 echo "📚 Next steps:"
-echo "   1. Read QUICKSTART.md for setup instructions"
+echo "   1. Read README.md for setup instructions"
 echo "   2. Test the example site:"
 echo "      cd exampleSite"
 echo "      hugo server --themesDir ../.. -D"

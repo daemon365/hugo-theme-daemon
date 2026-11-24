@@ -31,7 +31,7 @@
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
-                        {{ .ReadingTime }} min read
+                        {{ .ReadingTime }} {{ i18n "minRead" }}
                     </span>
                     {{ end }}
                     
@@ -41,7 +41,7 @@
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                         </svg>
-                        {{ .WordCount }} words
+                        {{ .WordCount }} {{ i18n "words" }}
                     </span>
                     {{ end }}
                 </div>
@@ -67,33 +67,33 @@
             
             <footer class="post-footer">
                 <div class="post-license">
-                    <p><strong>Article Title:</strong> {{ .Title }}</p>
-                    <p><strong>Author:</strong> {{ .Site.Params.author }}</p>
-                    <p><strong>Permalink:</strong> <a href="{{ .Permalink }}">{{ .Permalink }}</a></p>
-                    <p><strong>License:</strong> This article is licensed under 
-                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">BY-NC-SA</a>. Please cite the source when reposting.
+                    <p><strong>{{ i18n "articleTitle" }}:</strong> {{ .Title }}</p>
+                    <p><strong>{{ i18n "author" }}:</strong> {{ .Site.Params.author }}</p>
+                    <p><strong>{{ i18n "permalink" }}:</strong> <a href="{{ .Permalink }}">{{ .Permalink }}</a></p>
+                    <p><strong>{{ i18n "license" }}:</strong> {{ i18n "licenseNotice" }}
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">BY-NC-SA</a>. {{ i18n "licenseCite" }}
                     </p>
                 </div>
                 
                 <!-- Navigation -->
                 <nav class="post-navigation">
-                    {{ with .PrevInSection }}
+                    {{ with and .Section .PrevInSection }}
                     <a href="{{ .RelPermalink }}" class="nav-prev">
                         <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="19" y1="12" x2="5" y2="12"></line>
                             <polyline points="12 19 5 12 12 5"></polyline>
                         </svg>
                         <div>
-                            <span class="nav-label">Previous</span>
+                            <span class="nav-label">{{ i18n "previous" }}</span>
                             <span class="nav-title">{{ .Title }}</span>
                         </div>
                     </a>
                     {{ end }}
                     
-                    {{ with .NextInSection }}
+                    {{ with and .Section .NextInSection }}
                     <a href="{{ .RelPermalink }}" class="nav-next">
                         <div>
-                            <span class="nav-label">Next</span>
+                            <span class="nav-label">{{ i18n "next" }}</span>
                             <span class="nav-title">{{ .Title }}</span>
                         </div>
                         <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -105,7 +105,7 @@
                 </nav>
                 
                 <!-- Comments Section -->
-                {{ if .Site.Params.comments.enable }}
+                {{ if and .Site.Params.comments .Site.Params.comments.enable }}
                 <div class="post-comments">
                     {{ if eq .Site.Params.comments.active "utterances" }}
                     {{ with .Site.Params.utterances }}
@@ -127,7 +127,7 @@
 </div>
 
 <!-- Floating TOC Button -->
-<div class="toc-float-button" id="tocButton">
+<div class="toc-float-button" id="tocButton" role="button" tabindex="0" aria-label="{{ i18n "tableOfContents" }}">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -137,16 +137,16 @@
 <!-- TOC Panel -->
 <div class="toc-panel" id="tocPanel">
     <div class="toc-panel-header">
-        <h3 class="toc-panel-title">Table of Contents</h3>
-        <button class="toc-panel-close" id="tocClose">
+        <h3 class="toc-panel-title">{{ i18n "tableOfContents" }}</h3>
+        <button class="toc-panel-close" id="tocClose" aria-label="{{ i18n "close" }}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
     </div>
-    <nav class="toc-panel-nav" id="TableOfContents">
+    <div class="toc-panel-nav">
         {{ .TableOfContents }}
-    </nav>
+    </div>
 </div>
 {{ end }}

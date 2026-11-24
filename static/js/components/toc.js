@@ -43,12 +43,12 @@
                     return;
                 }
                 
-                const targetId = href.substring(1);
+                const targetId = decodeURIComponent(href.substring(1));
                 const target = document.getElementById(targetId);
                 
                 if (target) {
                     const headerHeight = document.querySelector('.site-header')?.offsetHeight || 60;
-                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -78,7 +78,7 @@
                     const id = entry.target.getAttribute('id');
                     tocLinks.forEach(link => {
                         link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${id}`) {
+                        if (decodeURIComponent(link.getAttribute('href')) === `#${id}`) {
                             link.classList.add('active');
                         }
                     });

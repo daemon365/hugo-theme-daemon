@@ -1,6 +1,6 @@
 <!-- SEO Meta Tags -->
 <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .IsPage }}{{ .Summary | truncate 155 }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta name="keywords" content="{{ if .Keywords }}{{ delimit .Keywords ", " }}{{ else if .Params.tags }}{{ delimit .Params.tags ", " }}{{ else }}{{ .Site.Params.keywords }}{{ end }}">
+<meta name="keywords" content="{{ if .Keywords }}{{ delimit .Keywords ", " }}{{ else if .Params.tags }}{{ delimit .Params.tags ", " }}{{ else }}{{ delimit .Site.Params.keywords ", " }}{{ end }}">
 <meta name="author" content="{{ if .Params.author }}{{ .Params.author }}{{ else }}{{ .Site.Params.author }}{{ end }}">
 
 <!-- Open Graph / Facebook -->
@@ -15,7 +15,7 @@
 <meta property="og:image" content="{{ . | absURL }}">
 {{ end }}
 {{ end }}
-<meta property="og:locale" content="{{ .Site.Language.Lang | default "en_US" }}">
+<meta property="og:locale" content="{{ site.Language.Lang | default "en" }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 
 {{ if .IsPage }}
@@ -42,9 +42,9 @@
 <meta name="twitter:image" content="{{ . | absURL }}">
 {{ end }}
 {{ end }}
-{{ with .Site.Params.social.twitter }}
+{{ with .Site.Params.social }}{{ with .twitter }}
 <meta name="twitter:creator" content="@{{ . }}">
-{{ end }}
+{{ end }}{{ end }}
 
 <!-- Canonical URL -->
 <link rel="canonical" href="{{ .Permalink }}">
@@ -55,50 +55,24 @@
 {{ end }}
 
 <!-- JSON-LD Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "{{ if .IsPage }}BlogPosting{{ else }}WebSite{{ end }}",
-  {{ if .IsPage }}
-  "headline": "{{ .Title }}",
-  "description": "{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary | truncate 155 }}{{ end }}",
-  "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}",
-  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
-  "author": {
-    "@type": "Person",
-    "name": "{{ .Params.author | default .Site.Params.author }}"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "{{ .Site.Title }}",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ .Site.Params.logo | default .Site.Params.favicon | absURL }}"
-    }
-  },
-  {{ with .Params.image }}
-  "image": "{{ . | absURL }}",
-  {{ end }}
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ .Permalink }}"
-  },
-  {{ else }}
-  "name": "{{ .Site.Title }}",
-  "url": "{{ .Site.BaseURL }}",
-  "description": "{{ .Site.Params.description }}",
-  "publisher": {
-    "@type": "Organization",
-    "name": "{{ .Site.Title }}"
-  },
-  {{ end }}
-  "inLanguage": "{{ .Site.Language.Lang | default "en" }}"
-}
-</script>
+{{- $author := .Params.author | default .Site.Params.author -}}
+{{- $desc := cond (ne .Description "") .Description (.Summary | plainify | truncate 155) -}}
+{{- $ld := dict "@context" "https://schema.org" "inLanguage" (site.Language.Lang | default "en") -}}
+{{- if .IsPage -}}
+  {{- $logo := .Site.Params.logo | default .Site.Params.favicon -}}
+  {{- $publisher := dict "@type" "Organization" "name" .Site.Title -}}
+  {{- with $logo }}{{ $publisher = merge $publisher (dict "logo" (dict "@type" "ImageObject" "url" (. | absURL))) }}{{ end -}}
+  {{- $ld = merge $ld (dict "@type" "BlogPosting" "headline" .Title "description" $desc "datePublished" (.PublishDate.Format "2006-01-02T15:04:05Z07:00") "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00") "author" (dict "@type" "Person" "name" $author) "publisher" $publisher "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)) -}}
+  {{- with .Params.image }}{{ $ld = merge $ld (dict "image" (. | absURL)) }}{{ end -}}
+{{- else -}}
+  {{- $ld = merge $ld (dict "@type" "WebSite" "name" .Site.Title "url" .Site.Home.Permalink "description" .Site.Params.description "publisher" (dict "@type" "Organization" "name" .Site.Title)) -}}
+{{- end }}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
 
 <!-- Additional SEO -->
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
 {{ if .Params.noindex }}
 <meta name="robots" content="noindex, nofollow">
+{{ else }}
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
 {{ end }}

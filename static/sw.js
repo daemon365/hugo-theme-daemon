@@ -1,22 +1,20 @@
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `daemon-cache-${CACHE_VERSION}`;
-const OFFLINE_URL = '/offline.html';
+const BASE = self.registration.scope;
+const OFFLINE_URL = new URL('offline.html', BASE).href;
 
 // 需要缓存的静态资源
 const STATIC_CACHE = [
-    '/css/main.css',
-    '/js/main.js',
-    '/offline.html',
-];
+    'css/main.css',
+    'js/main.js',
+    'offline.html',
+].map((path) => new URL(path, BASE).href);
 
 // 安装 Service Worker
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Opened cache');
-                return cache.addAll(STATIC_CACHE);
-            })
+            .then((cache) => Promise.allSettled(STATIC_CACHE.map((url) => cache.add(url))))
             .then(() => self.skipWaiting())
     );
 });
@@ -58,12 +56,10 @@ self.addEventListener('fetch', (event) => {
                     return response;
                 }
 
-                // 克隆响应
-                const responseToCache = response.clone();
-
                 // 只缓存静态资源（CSS、JS、图片等）
                 const url = new URL(event.request.url);
                 if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|ttf)$/i)) {
+                    const responseToCache = response.clone();
                     caches.open(CACHE_NAME)
                         .then((cache) => {
                             cache.put(event.request, responseToCache);
@@ -76,7 +72,8 @@ self.addEventListener('fetch', (event) => {
                 // 网络请求失败，尝试从缓存获取
                 return caches.match(event.request)
                     .then((cachedResponse) => {
-                        return cachedResponse || caches.match(OFFLINE_URL);
+                        if (cachedResponse) return cachedResponse;
+                        return event.request.mode === 'navigate' ? caches.match(OFFLINE_URL) : Response.error();
                     });
             })
     );

@@ -1,16 +1,16 @@
-<div class="search-modal" id="searchModal">
+<div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="{{ i18n "search" }}">
     <div class="search-modal-backdrop"></div>
     <div class="search-modal-content">
         <div class="search-modal-header">
-            <input type="text" class="search-input" id="searchInput" placeholder="{{ i18n "searchPlaceholder" }}" autofocus>
-            <button class="search-close" aria-label="Close search">
+            <input type="text" class="search-input" id="searchInput" placeholder="{{ i18n "searchPlaceholder" }}">
+            <button class="search-close" aria-label="{{ i18n "close" }}">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
         </div>
-        <div class="search-results" id="searchResults">
+        <div class="search-results" id="searchResults" data-no-results="{{ i18n "searchNoResults" }}">
             <p class="search-hint">{{ i18n "searchHint" }}</p>
         </div>
     </div>

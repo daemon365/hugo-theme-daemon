@@ -43,7 +43,7 @@
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight - windowHeight;
         const scrolled = window.scrollY;
-        const progress = Math.round((scrolled / documentHeight) * 100);
+        const progress = documentHeight > 0 ? Math.min(100, Math.round((scrolled / documentHeight) * 100)) : 0;
         
         if (scrollPercent) {
             scrollPercent.textContent = progress + '%';

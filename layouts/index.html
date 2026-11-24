@@ -38,13 +38,13 @@
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
-                                {{ .ReadingTime }} min read
+                                {{ .ReadingTime }} {{ i18n "minRead" }}
                             </span>
                             {{ end }}
                         </div>
                         
-                        {{ if .Plain }}
-                        <p class="post-summary">{{ .Plain | truncate 150 }}</p>
+                        {{ if .Summary }}
+                        <p class="post-summary">{{ .Summary | plainify | truncate 150 }}</p>
                         {{ end }}
                         
                         {{ with .Params.tags }}

@@ -192,3 +192,61 @@ other = "星期六"
 
 [sunday]
 other = "星期日"
+
+# 其他
+[posts]
+other = "篇文章"
+
+[postsTotal]
+other = "篇文章"
+
+[minRead]
+other = "分钟阅读"
+
+[words]
+other = "字"
+
+[previous]
+other = "上一篇"
+
+[next]
+other = "下一篇"
+
+[pageOf]
+other = "第 {{ .Current }} 页，共 {{ .Total }} 页"
+
+[articleTitle]
+other = "文章标题"
+
+[permalink]
+other = "本文链接"
+
+[licenseNotice]
+other = "本文采用"
+
+[licenseCite]
+other = "转载请注明出处。"
+
+[notFoundTitle]
+other = "页面未找到"
+
+[notFoundText]
+other = "抱歉，您访问的页面似乎已经不存在了。"
+
+[backToHome]
+other = "返回首页"
+
+[helpfulLinks]
+other = "这些链接或许对您有帮助："
+
+[returnHome]
+other = "回到首页"
+
+[browseArchives]
+other = "浏览所有文章"
+
+[exploreCategories]
+other = "按分类浏览"
+
+[findByTag]
+other = "按标签查找文章"

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language.Lang | default "en" }}">
+<html lang="{{ site.Language.Lang | default "en" }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,40 +22,16 @@
     <link rel="apple-touch-icon" href="{{ . | relURL }}">
     {{ end }}
     
-    <!-- RSS Feed -->
-    {{ with .OutputFormats.Get "RSS" }}
-    <link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" href="{{ .Permalink }}">
-    {{ end }}
-    
     <!-- SEO Meta Tags -->
     {{ partial "seo.html" . }}
     
-    <!-- Modular CSS - Load individual component stylesheets -->
-    <!-- Variables and base styles -->
-    <link rel="stylesheet" href="{{ "css/components/variables.css" | relURL }}">
-    <link rel="stylesheet" href="{{ "css/components/base.css" | relURL }}">
-    <link rel="stylesheet" href="{{ "css/components/layout.css" | relURL }}">
-    
-    <!-- Component styles (loaded from main.css for now, can be separated later) -->
+    <!-- Styles (main.css imports variables/base/layout and the component stylesheets) -->
     <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-    
-    <!-- Interactive component styles -->
-    <link rel="stylesheet" href="{{ "css/components/search.css" | relURL }}">
-    <link rel="stylesheet" href="{{ "css/components/toc.css" | relURL }}">
-    <link rel="stylesheet" href="{{ "css/components/image-preview.css" | relURL }}">
-    <link rel="stylesheet" href="{{ "css/components/reading-progress.css" | relURL }}">
-    
-    <!-- Fonts -->
-    <style>
-        :root {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-    </style>
-    
+
     {{ partial "math.html" . }}
     {{ block "head" . }}{{ end }}
 </head>
-<body>
+<body data-base-url="{{ "/" | relURL }}">
     <!-- Reading Progress Bar -->
     <div class="reading-progress-bar"></div>
     
@@ -76,13 +52,13 @@
     <script src="{{ "js/components/lazy-loading.js" | relURL }}"></script>
     <script src="{{ "js/components/image-preview.js" | relURL }}"></script>
     <script src="{{ "js/components/back-to-top.js" | relURL }}"></script>
-    <script src="{{ "js/main-new.js" | relURL }}"></script>
+    <script src="{{ "js/main.js" | relURL }}"></script>
     
     <!-- PWA Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('{{ "sw.js" | relURL }}')
                     .then((registration) => {
                         console.log('Service Worker registered:', registration.scope);
                     })

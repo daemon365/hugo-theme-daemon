@@ -6,6 +6,10 @@
 @import "components/variables.css";
 @import "components/base.css";
 @import "components/layout.css";
+@import "components/search.css";
+@import "components/toc.css";
+@import "components/image-preview.css";
+@import "components/reading-progress.css";
 
 /* ===== Header ===== */
 .site-header {
@@ -565,6 +569,8 @@
 }
 
 .category-card .category-count {
+    background: none;
+    padding: 0;
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
     margin: 0;
@@ -598,19 +604,50 @@
     border-color: var(--color-accent);
 }
 
+.tag-item {
+    gap: var(--spacing-sm);
+}
+
+.tag-item .icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+}
+
+.tag-item .tag-count {
+    margin-left: auto;
+}
+
 .tag-name,
 .category-name {
     font-weight: 500;
     color: var(--color-text);
 }
 
-.tag-count,
-.category-count {
+.tag-count {
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
     background: var(--color-bg-secondary);
     padding: var(--spacing-xs) var(--spacing-md);
     border-radius: var(--border-radius-full);
+}
+
+/* ===== Term (single tag/category) Page ===== */
+.taxonomy-term-container,
+.list-container {
+    padding: var(--spacing-3xl) 0;
+}
+
+.taxonomy-term-container .page-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.taxonomy-count,
+.list-count {
+    color: var(--color-text-tertiary);
+    font-size: var(--font-size-base);
+    margin: 0;
 }
 
 /* ===== Archive Page ===== */
@@ -908,8 +945,75 @@
     }
 }
 
-/* Import interactive components */
-@import "components/search.css";
-@import "components/toc.css";
-@import "components/image-preview.css";
-@import "components/reading-progress.css";
+/* ===== Overflow safety for long content ===== */
+.post-body {
+    overflow-wrap: anywhere;
+}
+
+.post-body pre,
+.post-body .highlight {
+    max-width: 100%;
+}
+
+.post-body table {
+    display: block;
+    overflow-x: auto;
+}
+
+/* ===== Utilities ===== */
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-tertiary);
+}
+
+/* ===== Math (KaTeX) ===== */
+.katex {
+    font-size: 1.1em;
+}
+
+.katex-display {
+    margin: 1.5em 0;
+    padding: 1em;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-md);
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.katex-display > .katex {
+    text-align: center;
+    display: block;
+}
+
+/* ===== Accessibility ===== */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

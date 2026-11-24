@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language.Lang | default "en" }}">
+<html lang="{{ site.Language.Lang | default "en" }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | {{ .Site.Title }}</title>
+    <title>404 - {{ i18n "notFoundTitle" }} | {{ .Site.Title }}</title>
     
     <!-- Favicon -->
     {{ with .Site.Params.favicon }}
@@ -237,24 +237,24 @@
 
     <div class="error-container">
         <div class="error-code">404</div>
-        <h1>Page Not Found</h1>
-        <p>Oops! The page you're looking for seems to have wandered off into the digital wilderness.</p>
+        <h1>{{ i18n "notFoundTitle" }}</h1>
+        <p>{{ i18n "notFoundText" }}</p>
         
-        <a href="{{ .Site.BaseURL | relURL }}" class="home-button">
+        <a href="{{ "/" | relURL }}" class="home-button">
             <svg class="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            Back to Home
+            {{ i18n "backToHome" }}
         </a>
 
         <div class="suggestions">
-            <h3>Here are some helpful links:</h3>
+            <h3>{{ i18n "helpfulLinks" }}</h3>
             <ul>
-                <li><a href="{{ .Site.BaseURL | relURL }}">Home</a> - Return to the homepage</li>
-                <li><a href="{{ "archives" | relURL }}">Archives</a> - Browse all articles</li>
-                <li><a href="{{ "categories" | relURL }}">Categories</a> - Explore by category</li>
-                <li><a href="{{ "tags" | relURL }}">Tags</a> - Find articles by tag</li>
+                <li><a href="{{ "/" | relURL }}">{{ i18n "home" }}</a> - {{ i18n "returnHome" }}</li>
+                <li><a href="{{ "archives" | relURL }}">{{ i18n "archives" }}</a> - {{ i18n "browseArchives" }}</li>
+                <li><a href="{{ "categories" | relURL }}">{{ i18n "categories" }}</a> - {{ i18n "exploreCategories" }}</li>
+                <li><a href="{{ "tags" | relURL }}">{{ i18n "tags" }}</a> - {{ i18n "findByTag" }}</li>
             </ul>
         </div>
     </div>

@@ -4,7 +4,7 @@
 <div class="taxonomy-container">
     <div class="container">
         <header class="page-header">
-            <h1 class="page-title">Tags</h1>
+            <h1 class="page-title">{{ i18n "tags" }}</h1>
         </header>
         
         <div class="tags-cloud">
@@ -33,7 +33,7 @@
                 </svg>
                 {{ .Title }}
             </h1>
-            <p class="taxonomy-count"><strong>{{ len .Pages }}</strong> posts</p>
+            <p class="taxonomy-count"><strong>{{ len .Pages }}</strong> {{ i18n "posts" }}</p>
         </header>
         
         <div class="posts-list">
@@ -61,13 +61,13 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
-                            {{ .ReadingTime }} min read
+                            {{ .ReadingTime }} {{ i18n "minRead" }}
                         </span>
                         {{ end }}
                     </div>
                     
-                    {{ if .Plain }}
-                    <p class="post-summary">{{ .Plain | truncate 150 }}</p>
+                    {{ if .Summary }}
+                    <p class="post-summary">{{ .Summary | plainify | truncate 150 }}</p>
                     {{ end }}
                 </div>
             </article>

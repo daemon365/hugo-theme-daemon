@@ -6,6 +6,17 @@
     const searchTrigger = document.querySelector('.search-trigger');
     const searchClose = document.querySelector('.search-close');
     const searchBackdrop = document.querySelector('.search-modal-backdrop');
+    if (!searchModal || !searchInput || !searchResults) return;
+
+    const baseUrl = document.body.dataset.baseUrl || '/';
+    const hintText = (searchResults.querySelector('.search-hint') || {}).textContent || '';
+    const hintHTML = () => '<p class="search-hint">' + escapeHtml(hintText) + '</p>';
+
+    function escapeHtml(str) {
+        return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+    }
 
     let searchIndex = [];
     let fuse;
@@ -27,14 +38,15 @@
         searchModal.classList.remove('active');
         document.body.style.overflow = '';
         searchInput.value = '';
-        searchResults.innerHTML = '<p class="search-hint">Enter 2 or more characters to start searching</p>';
+        searchResults.innerHTML = hintHTML();
     }
 
     // Load search index
     async function loadSearchIndex() {
         try {
-            const response = await fetch('/index.json');
+            const response = await fetch(baseUrl + 'index.json');
             searchIndex = await response.json();
+            searchIndex.forEach(i => { i.content = i.content || ''; i.title = i.title || ''; });
             
             // Initialize Fuse.js for fuzzy search
             if (typeof Fuse !== 'undefined') {
@@ -53,7 +65,7 @@
     // Perform search
     function performSearch(query) {
         if (!query || query.length < 2) {
-            searchResults.innerHTML = '<p class="search-hint">Enter 2 or more characters to start searching</p>';
+            searchResults.innerHTML = hintHTML();
             return;
         }
 
@@ -66,7 +78,7 @@
         } else {
             // Simple fallback search
             results = searchIndex.filter(item => {
-                const searchText = `${item.title} ${item.content} ${item.tags} ${item.categories}`.toLowerCase();
+                const searchText = `${item.title} ${item.content} ${(item.tags || []).join(' ')} ${(item.categories || []).join(' ')}`.toLowerCase();
                 return searchText.includes(query.toLowerCase());
             }).slice(0, 10);
             displaySearchResults(results, query);
@@ -76,7 +88,7 @@
     // Display search results
     function displaySearchResults(results, query) {
         if (results.length === 0) {
-            searchResults.innerHTML = '<p class="search-hint">No matching results found</p>';
+            searchResults.innerHTML = '<p class="search-hint">' + escapeHtml(searchResults.dataset.noResults || 'No results') + '</p>';
             return;
         }
 
@@ -85,7 +97,7 @@
             return `
                 <div class="search-result-item">
                     <h4 class="search-result-title">
-                        <a href="${result.permalink}">${highlightText(result.title, query)}</a>
+                        <a href="${escapeHtml(result.permalink)}">${highlightText(result.title, query)}</a>
                     </h4>
                     <p class="search-result-excerpt">${excerpt}</p>
                 </div>
@@ -97,8 +109,9 @@
 
     // Get excerpt around search term
     function getExcerpt(content, query) {
+        content = content || '';
         const index = content.toLowerCase().indexOf(query.toLowerCase());
-        if (index === -1) return content.substring(0, 150) + '...';
+        if (index === -1) return escapeHtml(content.substring(0, 150)) + '...';
         
         const start = Math.max(0, index - 75);
         const end = Math.min(content.length, index + query.length + 75);
@@ -112,8 +125,8 @@
 
     // Highlight search term
     function highlightText(text, query) {
-        const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        const regex = new RegExp(`(${escapeRegex(escapeHtml(query))})`, 'gi');
+        return escapeHtml(text).replace(regex, '<mark>$1</mark>');
     }
 
     // Escape regex special characters
@@ -143,7 +156,7 @@
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         // Open search with Cmd/Ctrl + K
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
             e.preventDefault();
             openSearch();
         }

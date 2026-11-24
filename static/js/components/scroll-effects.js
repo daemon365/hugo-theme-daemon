@@ -6,7 +6,7 @@
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight - windowHeight;
             const scrolled = window.scrollY;
-            const progress = (scrolled / documentHeight) * 100;
+            const progress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
             progressBar.style.width = progress + '%';
         });
     }
@@ -17,19 +17,11 @@
     const header = document.querySelector('.site-header');
     if (!header) return;
     
-    let lastScrollTop = 0;
-
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         // Add shadow on scroll
-        if (scrollTop > 10) {
-            header.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-        } else {
-            header.style.boxShadow = 'none';
-        }
-
-        lastScrollTop = scrollTop;
+        header.style.boxShadow = scrollTop > 10 ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none';
     });
 })();
 
@@ -41,11 +33,12 @@
             if (href === '#') return;
             
             e.preventDefault();
-            const target = document.querySelector(href);
+            let target = null;
+            try { target = document.querySelector(href); } catch (err) { return; }
             
             if (target) {
-                const headerHeight = document.querySelector('.site-header').offsetHeight;
-                const targetPosition = target.offsetTop - headerHeight - 20;
+                const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
                 
                 window.scrollTo({
                     top: targetPosition,

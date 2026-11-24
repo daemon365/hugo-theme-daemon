@@ -76,7 +76,8 @@ title = "Your Site Title"
 theme = "hugo-theme-daemon"
 
 enableEmoji = true
-paginate = 10
+[pagination]
+  pagerSize = 10
 
 [markup]
   [markup.highlight]
